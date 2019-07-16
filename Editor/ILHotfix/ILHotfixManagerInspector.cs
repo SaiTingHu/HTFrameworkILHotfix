@@ -1,0 +1,229 @@
+﻿using System.IO;
+using UnityEditor;
+using UnityEditorInternal;
+using UnityEngine;
+
+namespace HT.Framework.ILHotfix
+{
+    [CustomEditor(typeof(ILHotfixManager))]
+    public sealed class ILHotfixManagerInspector : ModuleEditor
+    {
+        private static readonly string SourceDllPath = "/Library/ScriptAssemblies/ILHotfix.dll";
+        private static readonly string AssetsDllPath = "/Assets/ILHotfix/ILHotfix.dll.bytes";
+
+        private ILHotfixManager _target;
+        private bool _ILHotfixIsCreated = false;
+        private string _ILHotfixDirectory = "/ILHotfix/";
+        private string _ILHotfixEnvironmentPath = "/ILHotfix/Environment/ILHotfixEnvironment.cs";
+        private string _ILHotfixAssemblyDefinitionPath = "/ILHotfix/ILHotfix.asmdef";
+
+        protected override void OnEnable()
+        {
+            _target = target as ILHotfixManager;
+            _ILHotfixIsCreated = false;
+            string hotfixDirectory = Application.dataPath + _ILHotfixDirectory;
+            string hotfixEnvironmentPath = Application.dataPath + _ILHotfixEnvironmentPath;
+            string hotfixAssemblyDefinitionPath = Application.dataPath + _ILHotfixAssemblyDefinitionPath;
+            if (Directory.Exists(hotfixDirectory))
+            {
+                if (File.Exists(hotfixEnvironmentPath))
+                {
+                    if (File.Exists(hotfixAssemblyDefinitionPath))
+                    {
+                        _ILHotfixIsCreated = true;
+                    }
+                }
+            }
+        }
+
+        public override void OnInspectorGUI()
+        {
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.HelpBox("ILHotfix manager, the hot update in this game!", MessageType.Info);
+            GUILayout.EndHorizontal();
+
+            #region ILHotfixDll
+            GUILayout.BeginVertical("box");
+
+            GUILayout.BeginHorizontal();
+            Toggle(_target.IsAutoStartUp, out _target.IsAutoStartUp, "Auto StartUp");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("ILHotfixDll AssetBundleName");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            TextField(_target.ILHotfixDllAssetBundleName, out _target.ILHotfixDllAssetBundleName);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("ILHotfixDll AssetsPath");
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            TextField(_target.ILHotfixDllAssetsPath, out _target.ILHotfixDllAssetsPath);
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
+            #endregion
+
+            #region ILHotfixWizard
+            if (_ILHotfixIsCreated)
+            {
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.HelpBox("ILHotfix environment is created!", MessageType.Info);
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginVertical("box");
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("ILHotfix Directory");
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.TextField("Assets" + _ILHotfixDirectory);
+                GUILayout.EndHorizontal();
+
+                GUILayout.EndVertical();
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Correct ILHotfix Environment", "LargeButton"))
+                {
+                    SetILHotfixAssemblyDefinition(Application.dataPath + _ILHotfixAssemblyDefinitionPath);
+                }
+                GUILayout.EndHorizontal();
+            }
+            else
+            {
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("Create ILHotfix Environment", "LargeButton"))
+                {
+                    CreateILHotfixEnvironment();
+                    _ILHotfixIsCreated = true;
+                }
+                GUILayout.EndHorizontal();
+            }
+            #endregion
+        }
+
+        private void CreateILHotfixEnvironment()
+        {
+            string hotfixDirectory = Application.dataPath + _ILHotfixDirectory;
+            string hotfixEnvironmentPath = Application.dataPath + _ILHotfixEnvironmentPath;
+            string hotfixAssemblyDefinitionPath = Application.dataPath + _ILHotfixAssemblyDefinitionPath;
+            if (!Directory.Exists(hotfixDirectory))
+            {
+                Directory.CreateDirectory(hotfixDirectory);
+            }
+            if (!Directory.Exists(hotfixDirectory + "Environment/"))
+            {
+                Directory.CreateDirectory(hotfixDirectory + "Environment/");
+            }
+            if (!File.Exists(hotfixEnvironmentPath))
+            {
+                CreateHotfixEnvironment(hotfixEnvironmentPath);
+            }
+            if (!File.Exists(hotfixAssemblyDefinitionPath))
+            {
+                CreateILHotfixAssemblyDefinition(hotfixAssemblyDefinitionPath);
+            }
+        }
+        private void SetILHotfixAssemblyDefinition(string filePath)
+        {
+            string contentOld = File.ReadAllText(filePath);
+            JsonData json = GlobalTools.StringToJson(contentOld);
+            json["name"] = "ILHotfix";
+            json["includePlatforms"] = new JsonData();
+            json["includePlatforms"].Add("Editor");
+            json["references"] = new JsonData();
+            json["references"].Add("HTFramework.RunTime");
+            json["references"].Add("HTFramework.ILHotfix.RunTime");
+            string contentNew = GlobalTools.JsonToString(json);
+
+            if (contentOld != contentNew)
+            {
+                File.WriteAllText(filePath, contentNew);
+                AssetDatabase.Refresh();
+                AssemblyDefinitionImporter importer = AssetImporter.GetAtPath("Assets" + _ILHotfixAssemblyDefinitionPath) as AssemblyDefinitionImporter;
+                importer.SaveAndReimport();
+            }
+        }
+        private void CreateILHotfixAssemblyDefinition(string filePath)
+        {
+            JsonData json = new JsonData();
+            json["name"] = "ILHotfix";
+            json["includePlatforms"] = new JsonData();
+            json["includePlatforms"].Add("Editor");
+            json["references"] = new JsonData();
+            json["references"].Add("HTFramework.RunTime");
+            json["references"].Add("HTFramework.ILHotfix.RunTime");
+
+            File.WriteAllText(filePath, GlobalTools.JsonToString(json));
+            AssetDatabase.Refresh();
+            AssemblyDefinitionImporter importer = AssetImporter.GetAtPath("Assets" + _ILHotfixAssemblyDefinitionPath) as AssemblyDefinitionImporter;
+            importer.SaveAndReimport();
+        }
+        private void CreateHotfixEnvironment(string filePath)
+        {
+            TextAsset asset = AssetDatabase.LoadAssetAtPath("Assets/HTFrameworkILHotfix/Editor/ILHotfix/Template/ILHotfixEnvironmentTemplate.txt", typeof(TextAsset)) as TextAsset;
+            if (asset)
+            {
+                string code = asset.text;
+                File.AppendAllText(filePath, code);
+                asset = null;
+                AssetDatabase.Refresh();
+            }
+        }
+
+        [InitializeOnLoadMethod]
+        private static void CopyILHotfixDll()
+        {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                string sourceDllPath = GlobalTools.GetDirectorySameLevelOfAssets(SourceDllPath);
+                if (File.Exists(sourceDllPath))
+                {
+                    File.Copy(sourceDllPath, GlobalTools.GetDirectorySameLevelOfAssets(AssetsDllPath), true);
+                    AssetDatabase.Refresh();
+                    GlobalTools.LogInfo("更新：Assets/ILHotfix/ILHotfix.dll");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 新建ILHotfixProcedure类
+        /// </summary>
+        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false, 0)]
+        private static void CreateILHotfixProcedure()
+        {
+            string path = EditorUtility.SaveFilePanel("新建 ILHotfixProcedure 类", Application.dataPath + "/ILHotfix", "NewILHotfixProcedure", "cs");
+            if (path != "")
+            {
+                string className = path.Substring(path.LastIndexOf("/") + 1).Replace(".cs", "");
+                if (!File.Exists(path))
+                {
+                    TextAsset asset = AssetDatabase.LoadAssetAtPath("Assets/HTFrameworkILHotfix/Editor/ILHotfix/Template/ILHotfixProcedureTemplate.txt", typeof(TextAsset)) as TextAsset;
+                    if (asset)
+                    {
+                        string code = asset.text;
+                        code = code.Replace("#SCRIPTNAME#", className);
+                        File.AppendAllText(path, code);
+                        asset = null;
+                        AssetDatabase.Refresh();
+
+                        string assetPath = path.Substring(path.LastIndexOf("Assets"));
+                        TextAsset cs = AssetDatabase.LoadAssetAtPath(assetPath, typeof(TextAsset)) as TextAsset;
+                        EditorGUIUtility.PingObject(cs);
+                        Selection.activeObject = cs;
+                        AssetDatabase.OpenAsset(cs);
+                    }
+                }
+                else
+                {
+                    GlobalTools.LogError("新建ILHotfixProcedure失败，已存在类型 " + className);
+                }
+            }
+        }
+    }
+}
