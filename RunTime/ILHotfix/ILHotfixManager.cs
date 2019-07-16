@@ -12,6 +12,7 @@ namespace HT.Framework.ILHotfix
     /// IL热更新模块管理者
     /// </summary>
     [DisallowMultipleComponent]
+    [DefaultExecutionOrder(-10)]
     public sealed class ILHotfixManager : MonoBehaviour
     {
         public static ILHotfixManager Current;
@@ -41,6 +42,8 @@ namespace HT.Framework.ILHotfix
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+
             Current = this;
 
             if (Main.m_Resource.Mode == ResourceMode.Resource)
