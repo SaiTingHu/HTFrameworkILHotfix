@@ -14,7 +14,7 @@
 
 ## 模块简介
 
-- [ILHotfix](https://wanderer.blog.csdn.net/article/details/90479971) - 基于ILRuntime实现的跨平台热更新框架，开发非常方便，新项目只需要拉取框架源码及本模块，一键即可创建热更新环境，之后便可以正常开发。
+- [ILHotfix](https://wanderer.blog.csdn.net/article/details/96152656) - 基于ILRuntime实现的跨平台热更新框架，开发非常方便，新项目只需要拉取框架源码及本模块，一键即可创建热更新环境，之后便可以正常开发。
 
 ## 使用方法
 
