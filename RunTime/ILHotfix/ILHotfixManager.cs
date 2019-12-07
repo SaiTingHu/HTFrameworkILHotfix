@@ -46,7 +46,7 @@ namespace HT.Framework.ILHotfix
 
             Current = this;
 
-            if (Main.m_Resource.Mode == ResourceMode.Resource)
+            if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
             {
                 GlobalTools.LogError("热更新初始化失败：热更新库不支持使用Resource加载模式！");
                 return;

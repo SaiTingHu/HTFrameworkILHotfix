@@ -6,20 +6,28 @@ using UnityEngine;
 namespace HT.Framework.ILHotfix
 {
     [CustomEditor(typeof(ILHotfixManager))]
-    public sealed class ILHotfixManagerInspector : ModuleEditor
+    public sealed class ILHotfixManagerInspector : HTFEditor<ILHotfixManager>
     {
         private static readonly string SourceDllPath = "/Library/ScriptAssemblies/ILHotfix.dll";
         private static readonly string AssetsDllPath = "/Assets/ILHotfix/ILHotfix.dll.bytes";
 
-        private ILHotfixManager _target;
         private bool _ILHotfixIsCreated = false;
         private string _ILHotfixDirectory = "/ILHotfix/";
         private string _ILHotfixEnvironmentPath = "/ILHotfix/Environment/ILHotfixEnvironment.cs";
         private string _ILHotfixAssemblyDefinitionPath = "/ILHotfix/ILHotfix.asmdef";
 
-        protected override void OnEnable()
+        protected override bool IsEnableRuntimeData
         {
-            _target = target as ILHotfixManager;
+            get
+            {
+                return false;
+            }
+        }
+
+        protected override void OnDefaultEnable()
+        {
+            base.OnDefaultEnable();
+
             _ILHotfixIsCreated = false;
             string hotfixDirectory = Application.dataPath + _ILHotfixDirectory;
             string hotfixEnvironmentPath = Application.dataPath + _ILHotfixEnvironmentPath;
@@ -36,8 +44,10 @@ namespace HT.Framework.ILHotfix
             }
         }
 
-        public override void OnInspectorGUI()
+        protected override void OnInspectorDefaultGUI()
         {
+            base.OnInspectorDefaultGUI();
+
             GUILayout.BeginHorizontal();
             EditorGUILayout.HelpBox("ILHotfix manager, the hot update in this game!", MessageType.Info);
             GUILayout.EndHorizontal();
@@ -46,7 +56,7 @@ namespace HT.Framework.ILHotfix
             GUILayout.BeginVertical("box");
 
             GUILayout.BeginHorizontal();
-            Toggle(_target.IsAutoStartUp, out _target.IsAutoStartUp, "Auto StartUp");
+            Toggle(Target.IsAutoStartUp, out Target.IsAutoStartUp, "Auto StartUp");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -54,7 +64,7 @@ namespace HT.Framework.ILHotfix
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            TextField(_target.ILHotfixDllAssetBundleName, out _target.ILHotfixDllAssetBundleName);
+            TextField(Target.ILHotfixDllAssetBundleName, out Target.ILHotfixDllAssetBundleName, "");
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
@@ -62,7 +72,7 @@ namespace HT.Framework.ILHotfix
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            TextField(_target.ILHotfixDllAssetsPath, out _target.ILHotfixDllAssetsPath);
+            TextField(Target.ILHotfixDllAssetsPath, out Target.ILHotfixDllAssetsPath, "");
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
@@ -194,7 +204,7 @@ namespace HT.Framework.ILHotfix
         /// <summary>
         /// 新建ILHotfixProcedure类
         /// </summary>
-        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false, 0)]
+        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false)]
         private static void CreateILHotfixProcedure()
         {
             string path = EditorUtility.SaveFilePanel("新建 ILHotfixProcedure 类", Application.dataPath + "/ILHotfix", "NewILHotfixProcedure", "cs");
