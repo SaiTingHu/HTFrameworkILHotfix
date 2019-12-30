@@ -204,9 +204,18 @@ namespace HT.Framework.ILHotfix
         }
 
         /// <summary>
+        /// 【验证函数】新建ILHotfixProcedure类
+        /// </summary>
+        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", true)]
+        private static bool CreateILHotfixProcedureValidate()
+        {
+            return AssetDatabase.IsValidFolder("Assets/ILHotfix");
+        }
+
+        /// <summary>
         /// 新建ILHotfixProcedure类
         /// </summary>
-        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false)]
+        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false, 0)]
         private static void CreateILHotfixProcedure()
         {
             string path = EditorUtility.SaveFilePanel("新建 ILHotfixProcedure 类", Application.dataPath + "/ILHotfix", "NewILHotfixProcedure", "cs");
