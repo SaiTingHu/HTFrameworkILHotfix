@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace HT.Framework.ILHotfix
 {
+    [CSDNBlogURL("https://wanderer.blog.csdn.net/article/details/96152656")]
+    [GithubURL("https://github.com/SaiTingHu/HTFrameworkILHotfix")]
     [CustomEditor(typeof(ILHotfixManager))]
     public sealed class ILHotfixManagerInspector : HTFEditor<ILHotfixManager>
     {
