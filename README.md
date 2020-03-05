@@ -1,6 +1,6 @@
 # Unity HTFramework ILHotfix
 
-基于ILRuntime的Unity跨平台热更新方案，必须依赖于HTFramework主框架使用。
+基于ILRuntime的Unity跨平台热更新模块，必须依赖于HTFramework主框架使用。
 
 ## 环境
 
