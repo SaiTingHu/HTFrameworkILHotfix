@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
+
+[assembly: InternalsVisibleTo("Assembly-CSharp-Editor")]
 
 namespace HT.Framework.ILHotfix
 {
@@ -17,17 +20,17 @@ namespace HT.Framework.ILHotfix
         public static ILHotfixManager Current;
 
         /// <summary>
-        /// 自动启动
+        /// 自动启动【请勿在代码中修改】
         /// </summary>
-        public bool IsAutoStartUp = false;
+        [SerializeField] internal bool IsAutoStartUp = false;
         /// <summary>
-        /// 热更新库文件AB包名称
+        /// 热更新库文件AB包名称【请勿在代码中修改】
         /// </summary>
-        public string ILHotfixDllAssetBundleName = "ilhotfix";
+        [SerializeField] internal string ILHotfixDllAssetBundleName = "ilhotfix";
         /// <summary>
-        /// 热更新库文件路径
+        /// 热更新库文件路径【请勿在代码中修改】
         /// </summary>
-        public string ILHotfixDllAssetsPath = "Assets/ILHotfix/ILHotfix.dll.bytes";
+        [SerializeField] internal string ILHotfixDllAssetsPath = "Assets/ILHotfix/ILHotfix.dll.bytes";
         /// <summary>
         /// 执行热更新逻辑事件
         /// </summary>
