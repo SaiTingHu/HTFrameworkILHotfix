@@ -69,7 +69,7 @@ public sealed class ILHotfixEnvironment
         ILHotfixManager.Current.UpdateILHotfixLogicEvent += UpdateHotfixLogic;
     }
 
-    public void UpdateHotfixLogic()
+    private void UpdateHotfixLogic()
     {
         if (_currentProcedure != null)
         {

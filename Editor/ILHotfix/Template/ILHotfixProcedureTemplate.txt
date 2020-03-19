@@ -8,7 +8,7 @@ using DG.Tweening;
 /// 新建热更新流程
 /// </summary>
 [ILHotfixProcedureState(ILHotfixProcedureState.Normal)]
-public class #SCRIPTNAME# : ILHotfixProcedure
+public class #SCRIPTNAME# : ILHotfixProcedureBase
 {
     /// <summary>
     /// 流程初始化

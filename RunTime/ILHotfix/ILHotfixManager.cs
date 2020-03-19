@@ -1,5 +1,4 @@
-﻿using ILRuntime.Runtime.Generated;
-using Mono.Cecil.Pdb;
+﻿using Mono.Cecil.Pdb;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -76,16 +75,6 @@ namespace HT.Framework.ILHotfix
         {
             get
             {
-                if (_ILHotFixTypes.Count <= 0)
-                {
-                    if (_appDomain != null)
-                    {
-                        foreach (var item in _appDomain.LoadedTypes.Values)
-                        {
-                            _ILHotFixTypes.Add(item.ReflectionType);
-                        }
-                    }
-                }
                 return _ILHotFixTypes;
             }
         }
@@ -114,6 +103,12 @@ namespace HT.Framework.ILHotfix
                 MemoryStream dllStream = new MemoryStream(_ILHotfixDll.bytes);
                 _appDomain.LoadAssembly(dllStream, null, new PdbReaderProvider());
 
+                _ILHotFixTypes.Clear();
+                foreach (var item in _appDomain.LoadedTypes.Values)
+                {
+                    _ILHotFixTypes.Add(item.ReflectionType);
+                }
+
                 ILHotfixInitialize();
 
                 _ILHotfixEnvironment = _appDomain.Instantiate("ILHotfixEnvironment");
@@ -135,8 +130,6 @@ namespace HT.Framework.ILHotfix
 
         private void ILHotfixInitialize()
         {
-            CLRBindings.Initialize(_appDomain);
-
             _appDomain.RegisterCrossBindingAdaptor(new ILHotfixProcedureAdapter());
         }
     }

@@ -12,7 +12,7 @@ namespace HT.Framework.ILHotfix
         {
             get
             {
-                return typeof(ILHotfixProcedure);
+                return typeof(ILHotfixProcedureBase);
             }
         }
 
@@ -29,7 +29,7 @@ namespace HT.Framework.ILHotfix
             return new Adaptor(appdomain, instance);
         }
 
-        public sealed class Adaptor : ILHotfixProcedure, CrossBindingAdaptorType
+        public sealed class Adaptor : ILHotfixProcedureBase, CrossBindingAdaptorType
         {
             private AppDomain _appdomain;
             private ILTypeInstance _instance;
