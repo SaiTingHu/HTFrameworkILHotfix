@@ -206,49 +206,5 @@ namespace HT.Framework.ILHotfix
                 }
             }
         }
-
-        /// <summary>
-        /// 【验证函数】新建ILHotfixProcedure类
-        /// </summary>
-        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", true)]
-        private static bool CreateILHotfixProcedureValidate()
-        {
-            return AssetDatabase.IsValidFolder("Assets/ILHotfix");
-        }
-
-        /// <summary>
-        /// 新建ILHotfixProcedure类
-        /// </summary>
-        [@MenuItem("Assets/Create/HTFramework ILHotfix/[ILHotfix] C# ILHotfixProcedure Script", false, 0)]
-        private static void CreateILHotfixProcedure()
-        {
-            string path = EditorUtility.SaveFilePanel("新建 ILHotfixProcedure 类", Application.dataPath + "/ILHotfix", "NewILHotfixProcedure", "cs");
-            if (path != "")
-            {
-                string className = path.Substring(path.LastIndexOf("/") + 1).Replace(".cs", "");
-                if (!File.Exists(path))
-                {
-                    TextAsset asset = AssetDatabase.LoadAssetAtPath("Assets/HTFrameworkILHotfix/Editor/ILHotfix/Template/ILHotfixProcedureTemplate.txt", typeof(TextAsset)) as TextAsset;
-                    if (asset)
-                    {
-                        string code = asset.text;
-                        code = code.Replace("#SCRIPTNAME#", className);
-                        File.AppendAllText(path, code);
-                        asset = null;
-                        AssetDatabase.Refresh();
-
-                        string assetPath = path.Substring(path.LastIndexOf("Assets"));
-                        TextAsset cs = AssetDatabase.LoadAssetAtPath(assetPath, typeof(TextAsset)) as TextAsset;
-                        EditorGUIUtility.PingObject(cs);
-                        Selection.activeObject = cs;
-                        AssetDatabase.OpenAsset(cs);
-                    }
-                }
-                else
-                {
-                    GlobalTools.LogError("新建ILHotfixProcedure失败，已存在类型 " + className);
-                }
-            }
-        }
     }
 }

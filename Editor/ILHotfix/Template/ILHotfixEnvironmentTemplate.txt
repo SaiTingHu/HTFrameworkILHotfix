@@ -11,8 +11,8 @@ public sealed class ILHotfixEnvironment
 {
     public static ILHotfixEnvironment Environment;
 
-    private Dictionary<Type, ILHotfixProcedure> _procedureInstances = new Dictionary<Type, ILHotfixProcedure>();
-    private ILHotfixProcedure _currentProcedure;
+    private Dictionary<Type, ILHotfixProcedureBase> _procedureInstances = new Dictionary<Type, ILHotfixProcedureBase>();
+    private ILHotfixProcedureBase _currentProcedure;
     private Type _entranceProcedure;
     private float _timer = 0;
 
@@ -36,14 +36,14 @@ public sealed class ILHotfixEnvironment
                             _entranceProcedure = types[i];
                             if (!_procedureInstances.ContainsKey(types[i]))
                             {
-                                _procedureInstances.Add(types[i], Activator.CreateInstance(types[i]) as ILHotfixProcedure);
+                                _procedureInstances.Add(types[i], Activator.CreateInstance(types[i]) as ILHotfixProcedureBase);
                             }
                         }
                         else if (hpsa.State == ILHotfixProcedureState.Normal)
                         {
                             if (!_procedureInstances.ContainsKey(types[i]))
                             {
-                                _procedureInstances.Add(types[i], Activator.CreateInstance(types[i]) as ILHotfixProcedure);
+                                _procedureInstances.Add(types[i], Activator.CreateInstance(types[i]) as ILHotfixProcedureBase);
                             }
                         }
                     }
@@ -51,7 +51,7 @@ public sealed class ILHotfixEnvironment
             }
         }
 
-        foreach (KeyValuePair<Type, ILHotfixProcedure> procedureInstance in _procedureInstances)
+        foreach (KeyValuePair<Type, ILHotfixProcedureBase> procedureInstance in _procedureInstances)
         {
             procedureInstance.Value.OnInit();
         }
@@ -90,7 +90,7 @@ public sealed class ILHotfixEnvironment
     /// <summary>
     /// 切换热更新流程
     /// </summary>
-    public void SwitchProcedure<T>() where T : ILHotfixProcedure
+    public void SwitchProcedure<T>() where T : ILHotfixProcedureBase
     {
         if (_procedureInstances.ContainsKey(typeof(T)))
         {

@@ -18,12 +18,12 @@
 
 ## 使用方法
 
-- 1.拉取框架到项目中的Assets文件夹下（Assets/HTFramework/）。
+- 1.拉取框架到项目中的Assets文件夹下（Assets/HTFramework/），或以添加子模块的形式。
 
-- 2.将框架根目录下的HTFramework.prefab拖到主场景，并删除主场景其他的东西（除了框架的主要模块，其他任何东西都应该是动态加载的）。
+- 2.在入口场景的层级（Hierarchy）视图点击右键，选择 HTFramework -> Main Environment（创建框架主环境），并删除入口场景其他的东西（除了框架的主要模块，其他任何东西都应该是动态加载的）。
 
-- 3.拉取本模块到项目中的Assets文件夹下（Assets/HTFrameworkILHotfix/）。
+- 3.拉取本模块到项目中的Assets文件夹下（Assets/HTFrameworkILHotfix/），或以添加子模块的形式。
 
-- 4.将HTFrameworkILHotfix目录下的HTFrameworkILHotfix.prefab拖到主场景，并一键创建热更新环境，新建热更新入口流程及其他流程。
+- 4.在入口场景的层级（Hierarchy）视图点击右键，选择 HTFramework.ILHotfix -> ILHotfix Environment（创建ILHotfix主环境），并一键创建热更新环境，新建热更新入口流程及其他流程。
 
-- 5.开始开发。
+- 5.参阅各个模块的帮助文档，开始开发。
