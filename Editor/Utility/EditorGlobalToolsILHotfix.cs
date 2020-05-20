@@ -38,7 +38,7 @@ namespace HT.Framework.ILHotfix
             }
             else
             {
-                GlobalTools.LogError("新建ILHotfix主环境失败，丢失主预制体：Assets/HTFrameworkILHotfix/HTFrameworkILHotfix.prefab");
+                Log.Error("新建ILHotfix主环境失败，丢失主预制体：Assets/HTFrameworkILHotfix/HTFrameworkILHotfix.prefab");
             }
         }
         #endregion
@@ -83,7 +83,7 @@ namespace HT.Framework.ILHotfix
                 }
                 else
                 {
-                    GlobalTools.LogError("新建ILHotfixProcedure失败，已存在类型 " + className);
+                    Log.Error("新建ILHotfixProcedure失败，已存在类型 " + className);
                 }
             }
         }

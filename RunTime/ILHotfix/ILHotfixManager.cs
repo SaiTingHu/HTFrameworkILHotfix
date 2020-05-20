@@ -50,7 +50,7 @@ namespace HT.Framework.ILHotfix
 
             if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
             {
-                GlobalTools.LogError("热更新初始化失败：热更新库不支持使用Resource加载模式！");
+                Log.Error("热更新初始化失败：热更新库不支持使用Resource加载模式！");
                 return;
             }
         }
@@ -119,7 +119,7 @@ namespace HT.Framework.ILHotfix
                 if (_ILHotfixEnvironment == null)
                 {
                     _isStartUp = false;
-                    GlobalTools.LogError("热更新初始化失败：热更新库中不存在热更新环境 ILHotfixEnvironment！");
+                    Log.Error("热更新初始化失败：热更新库中不存在热更新环境 ILHotfixEnvironment！");
                 }
 
                 dllStream.Dispose();
@@ -127,7 +127,7 @@ namespace HT.Framework.ILHotfix
             else
             {
                 _isStartUp = false;
-                GlobalTools.LogError("热更新初始化失败：未正确加载热更新库文件！");
+                Log.Error("热更新初始化失败：未正确加载热更新库文件！");
             }
         }
 

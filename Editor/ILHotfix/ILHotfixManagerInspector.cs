@@ -202,7 +202,7 @@ namespace HT.Framework.ILHotfix
                 {
                     File.Copy(sourceDllPath, GlobalTools.GetDirectorySameLevelOfAssets(AssetsDllPath), true);
                     AssetDatabase.Refresh();
-                    GlobalTools.LogInfo("更新：Assets/ILHotfix/ILHotfix.dll");
+                    Log.Info("更新：Assets/ILHotfix/ILHotfix.dll");
                 }
             }
         }
