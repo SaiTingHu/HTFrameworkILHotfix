@@ -14,7 +14,7 @@ namespace HT.Framework.ILHotfix
         /// <summary>
         /// 【验证函数】新建ILHotfix主环境
         /// </summary>
-        [@MenuItem("GameObject/HTFramework.ILHotfix/ILHotfix Environment", true)]
+        [@MenuItem("GameObject/HTFramework ILHotfix/ILHotfix Environment", true)]
         private static bool CreateILHotfixValidate()
         {
             return Object.FindObjectOfType<ILHotfixManager>() == null;
@@ -22,7 +22,7 @@ namespace HT.Framework.ILHotfix
         /// <summary>
         /// 新建ILHotfix主环境
         /// </summary>
-        [@MenuItem("GameObject/HTFramework.ILHotfix/ILHotfix Environment", false, 0)]
+        [@MenuItem("GameObject/HTFramework ILHotfix/ILHotfix Environment", false, 0)]
         private static void CreateILHotfix()
         {
             Object asset = AssetDatabase.LoadAssetAtPath<Object>("Assets/HTFrameworkILHotfix/HTFrameworkILHotfix.prefab");
