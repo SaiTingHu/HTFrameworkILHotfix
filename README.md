@@ -10,7 +10,7 @@
 
 - [ILRuntime](https://github.com/Ourpalm/ILRuntime)。
 
-- [HTFramework](https://github.com/SaiTingHu/HTFramework)。
+- [HTFramework(Latest version)](https://github.com/SaiTingHu/HTFramework)。
 
 ## 模块简介
 
