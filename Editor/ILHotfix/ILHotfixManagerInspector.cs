@@ -151,8 +151,7 @@ namespace HT.Framework.ILHotfix
             json["references"] = new JsonData();
             json["references"].Add("HTFramework.RunTime");
             json["references"].Add("HTFramework.ILHotfix.RunTime");
-            json["optionalUnityReferences"] = new JsonData();
-            json["optionalUnityReferences"].Add("TestAssemblies");
+            json["autoReferenced"] = false;
             string contentNew = GlobalTools.JsonToString(json);
 
             if (contentOld != contentNew)
@@ -172,8 +171,7 @@ namespace HT.Framework.ILHotfix
             json["references"] = new JsonData();
             json["references"].Add("HTFramework.RunTime");
             json["references"].Add("HTFramework.ILHotfix.RunTime");
-            json["optionalUnityReferences"] = new JsonData();
-            json["optionalUnityReferences"].Add("TestAssemblies");
+            json["autoReferenced"] = false;
 
             File.WriteAllText(filePath, GlobalTools.JsonToString(json));
             AssetDatabase.Refresh();
