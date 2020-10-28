@@ -180,7 +180,7 @@ namespace HT.Framework.ILHotfix
         }
         private void CreateHotfixEnvironment(string filePath)
         {
-            TextAsset asset = AssetDatabase.LoadAssetAtPath("Assets/HTFrameworkILHotfix/Editor/ILHotfix/Template/ILHotfixEnvironmentTemplate.txt", typeof(TextAsset)) as TextAsset;
+            TextAsset asset = AssetDatabase.LoadAssetAtPath(EditorPrefsTableILHotfix.ScriptTemplateFolder + "ILHotfixEnvironmentTemplate.txt", typeof(TextAsset)) as TextAsset;
             if (asset)
             {
                 string code = asset.text;
