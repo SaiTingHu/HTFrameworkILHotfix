@@ -44,8 +44,6 @@ namespace HT.Framework.ILHotfix
 
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-
             Current = this;
 
             if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
