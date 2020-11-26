@@ -15,7 +15,7 @@ namespace HT.Framework.ILHotfix
     /// </summary>
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-10)]
-    public sealed class ILHotfixManager : MonoBehaviour
+    public sealed class ILHotfixManager : HTBehaviour
     {
         public static ILHotfixManager Current;
 
@@ -42,8 +42,10 @@ namespace HT.Framework.ILHotfix
         private List<Type> _ILHotFixTypes = new List<Type>();
         private object _ILHotfixEnvironment;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             Current = this;
 
             if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
