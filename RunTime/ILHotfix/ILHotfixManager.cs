@@ -15,10 +15,8 @@ namespace HT.Framework.ILHotfix
     /// </summary>
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-10)]
-    public sealed class ILHotfixManager : HTBehaviour
+    public sealed class ILHotfixManager : SingletonBehaviourBase<ILHotfixManager>
     {
-        public static ILHotfixManager Current;
-
         /// <summary>
         /// 自动启动【请勿在代码中修改】
         /// </summary>
@@ -42,35 +40,6 @@ namespace HT.Framework.ILHotfix
         private List<Type> _ILHotFixTypes = new List<Type>();
         private object _ILHotfixEnvironment;
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            Current = this;
-
-            if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
-            {
-                Log.Error("热更新初始化失败：热更新库不支持使用Resource加载模式！");
-                return;
-            }
-        }
-
-        private void Start()
-        {
-            if (IsAutoStartUp)
-            {
-                StartUp();
-            }
-        }
-
-        private void Update()
-        {
-            if (_isStartUp)
-            {
-                UpdateILHotfixLogicEvent?.Invoke();
-            }
-        }
-
         /// <summary>
         /// 热更新库中的所有类型
         /// </summary>
@@ -82,6 +51,31 @@ namespace HT.Framework.ILHotfix
             }
         }
 
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            if (Main.m_Resource.Mode == ResourceLoadMode.Resource)
+            {
+                Log.Error("热更新初始化失败：热更新库不支持使用Resource加载模式！");
+                return;
+            }
+        }
+        private void Start()
+        {
+            if (IsAutoStartUp)
+            {
+                StartUp();
+            }
+        }
+        private void Update()
+        {
+            if (_isStartUp)
+            {
+                UpdateILHotfixLogicEvent?.Invoke();
+            }
+        }
+        
         /// <summary>
         /// 启动热更新
         /// </summary>
@@ -130,7 +124,6 @@ namespace HT.Framework.ILHotfix
                 Log.Error("热更新初始化失败：未正确加载热更新库文件！");
             }
         }
-
         private void ILHotfixInitialize()
         {
             _appDomain.RegisterCrossBindingAdaptor(new ILHotfixProcedureAdapter());

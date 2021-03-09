@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -99,7 +100,7 @@ namespace HT.Framework.ILHotfix
                                 code = code.Replace(replace[i], className);
                             }
                         }
-                        File.AppendAllText(path, code);
+                        File.AppendAllText(path, code, Encoding.UTF8);
                         asset = null;
                         AssetDatabase.Refresh();
 

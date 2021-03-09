@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -46,7 +47,6 @@ namespace HT.Framework.ILHotfix
                 }
             }
         }
-
         protected override void OnInspectorDefaultGUI()
         {
             base.OnInspectorDefaultGUI();
@@ -185,7 +185,7 @@ namespace HT.Framework.ILHotfix
             if (asset)
             {
                 string code = asset.text;
-                File.AppendAllText(filePath, code);
+                File.AppendAllText(filePath, code, Encoding.UTF8);
                 asset = null;
                 AssetDatabase.Refresh();
             }
