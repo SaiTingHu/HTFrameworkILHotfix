@@ -12,8 +12,23 @@ namespace HT.Framework.ILHotfix
     [CustomEditor(typeof(ILHotfixManager))]
     internal sealed class ILHotfixManagerInspector : HTFEditor<ILHotfixManager>
     {
-        private static readonly string SourceDllPath = "/Library/ScriptAssemblies/ILHotfix.dll";
-        private static readonly string AssetsDllPath = "/Assets/ILHotfix/ILHotfix.dll.bytes";
+        private static readonly string SourceDllPath = "Library/ScriptAssemblies/ILHotfix.dll";
+        private static readonly string AssetsDllPath = "Assets/ILHotfix/ILHotfix.dll.bytes";
+
+        [InitializeOnLoadMethod]
+        private static void CopyILHotfixDll()
+        {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                string sourceDllPath = PathToolkit.ProjectPath + SourceDllPath;
+                if (File.Exists(sourceDllPath))
+                {
+                    File.Copy(sourceDllPath, PathToolkit.ProjectPath + AssetsDllPath, true);
+                    AssetDatabase.Refresh();
+                    Log.Info("已更新：Assets/ILHotfix/ILHotfix.dll");
+                }
+            }
+        }
 
         private bool _ILHotfixIsCreated = false;
         private string _ILHotfixDirectory = "/ILHotfix/";
@@ -188,21 +203,6 @@ namespace HT.Framework.ILHotfix
                 File.AppendAllText(filePath, code, Encoding.UTF8);
                 asset = null;
                 AssetDatabase.Refresh();
-            }
-        }
-
-        [InitializeOnLoadMethod]
-        private static void CopyILHotfixDll()
-        {
-            if (!EditorApplication.isPlayingOrWillChangePlaymode)
-            {
-                string sourceDllPath = GlobalTools.GetDirectorySameLevelOfAssets(SourceDllPath);
-                if (File.Exists(sourceDllPath))
-                {
-                    File.Copy(sourceDllPath, GlobalTools.GetDirectorySameLevelOfAssets(AssetsDllPath), true);
-                    AssetDatabase.Refresh();
-                    Log.Info("更新：Assets/ILHotfix/ILHotfix.dll");
-                }
             }
         }
     }
