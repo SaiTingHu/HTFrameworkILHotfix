@@ -73,25 +73,19 @@ namespace HT.Framework.ILHotfix
             #region ILHotfixDll
             GUILayout.BeginVertical("box");
 
-            GUILayout.BeginHorizontal();
-            Toggle(Target.IsAutoStartUp, out Target.IsAutoStartUp, "Auto StartUp");
-            GUILayout.EndHorizontal();
+            PropertyField(nameof(ILHotfixManager.IsAutoStartUp), "Auto StartUp");
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("ILHotfixDll AssetBundleName");
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            TextField(Target.ILHotfixDllAssetBundleName, out Target.ILHotfixDllAssetBundleName, "");
-            GUILayout.EndHorizontal();
-
+            PropertyField(nameof(ILHotfixManager.ILHotfixDllAssetBundleName), "");
+            
             GUILayout.BeginHorizontal();
             GUILayout.Label("ILHotfixDll AssetsPath");
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            TextField(Target.ILHotfixDllAssetsPath, out Target.ILHotfixDllAssetsPath, "");
-            GUILayout.EndHorizontal();
+            PropertyField(nameof(ILHotfixManager.ILHotfixDllAssetsPath), "");
 
             GUILayout.EndVertical();
             #endregion
