@@ -36,6 +36,8 @@ namespace HT.Framework.ILHotfix
                 main.transform.localScale = Vector3.one;
                 Selection.activeGameObject = main;
                 EditorSceneManager.MarkSceneDirty(main.scene);
+                SceneVisibilityManager.instance.Hide(main, true);
+                SceneVisibilityManager.instance.DisablePicking(main, true);
             }
             else
             {
