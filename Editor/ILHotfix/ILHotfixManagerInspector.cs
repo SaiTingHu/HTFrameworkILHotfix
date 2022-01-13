@@ -154,7 +154,7 @@ namespace HT.Framework.ILHotfix
         private void SetILHotfixAssemblyDefinition(string filePath)
         {
             string contentOld = File.ReadAllText(filePath);
-            JsonData json = GlobalTools.StringToJson(contentOld);
+            JsonData json = JsonToolkit.StringToJson(contentOld);
             json["name"] = "ILHotfix";
             json["includePlatforms"] = new JsonData();
             json["includePlatforms"].Add("Editor");
@@ -162,7 +162,7 @@ namespace HT.Framework.ILHotfix
             json["references"].Add("HTFramework.RunTime");
             json["references"].Add("HTFramework.ILHotfix.RunTime");
             json["autoReferenced"] = false;
-            string contentNew = GlobalTools.JsonToString(json);
+            string contentNew = JsonToolkit.JsonToString(json);
 
             if (contentOld != contentNew)
             {
@@ -183,7 +183,7 @@ namespace HT.Framework.ILHotfix
             json["references"].Add("HTFramework.ILHotfix.RunTime");
             json["autoReferenced"] = false;
 
-            File.WriteAllText(filePath, GlobalTools.JsonToString(json));
+            File.WriteAllText(filePath, JsonToolkit.JsonToString(json));
             AssetDatabase.Refresh();
             AssemblyDefinitionImporter importer = AssetImporter.GetAtPath("Assets" + _ILHotfixAssemblyDefinitionPath) as AssemblyDefinitionImporter;
             importer.SaveAndReimport();
