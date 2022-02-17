@@ -3,7 +3,7 @@
     /// <summary>
     /// HT.Framework.ILHotfix编辑器配置表
     /// </summary>
-    public static class EditorPrefsTableILHotfix
+    internal static class EditorPrefsTableILHotfix
     {
         #region Editor Config
         /// <summary>

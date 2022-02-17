@@ -6,13 +6,14 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
-[assembly: InternalsVisibleTo("Assembly-CSharp-Editor")]
+[assembly: InternalsVisibleTo("HTFramework.ILHotfix.Editor")]
 
 namespace HT.Framework.ILHotfix
 {
     /// <summary>
     /// IL热更新模块管理者
     /// </summary>
+    [LockTransform]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-10)]
     public sealed class ILHotfixManager : SingletonBehaviourBase<ILHotfixManager>

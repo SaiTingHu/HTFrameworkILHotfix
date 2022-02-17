@@ -1,14 +1,15 @@
 {
     "name": "HTFramework.ILHotfix.RunTime",
     "references": [
-        "HTFramework.RunTime"
+        "GUID:83f631a6180cc5a41982c9354b6cc704"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
