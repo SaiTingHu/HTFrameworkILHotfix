@@ -117,7 +117,7 @@ namespace HT.Framework.ILHotfix
                     Log.Error("热更新初始化失败：热更新库中不存在热更新环境 ILHotfixEnvironment！");
                 }
 
-                dllStream.Dispose();
+                dllStream.Close();
             }
             else
             {
