@@ -16,7 +16,7 @@ namespace HT.Framework.ILHotfix
     [LockTransform]
     [DisallowMultipleComponent]
     [DefaultExecutionOrder(-10)]
-    public sealed class ILHotfixManager : SingletonBehaviourBase<ILHotfixManager>
+    public sealed class ILHotfixManager : SingletonBehaviourBase<ILHotfixManager>, IUpdateFrame
     {
         /// <summary>
         /// 自动启动【请勿在代码中修改】
@@ -69,14 +69,14 @@ namespace HT.Framework.ILHotfix
                 StartUp();
             }
         }
-        private void Update()
+        public void OnUpdateFrame()
         {
             if (_isStartUp)
             {
                 UpdateILHotfixLogicEvent?.Invoke();
             }
         }
-        
+
         /// <summary>
         /// 启动热更新
         /// </summary>
